@@ -60,6 +60,21 @@ class ViewController: UIViewController, WKNavigationDelegate {
         presentViewController(ac, animated: true, completion: nil)
     }
     
+    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
+        let url = navigationAction.request.URL
+        
+        if let host = url!.host {
+            for website in websites {
+                if host.rangeOfString(website) != nil {
+                    decisionHandler(.Allow)
+                    return
+                }
+            }
+        }
+        
+        decisionHandler(.Cancel)
+    }
+    
     //This method creates the NSURL string needed for the webView to be able to load the page
     func openPage(action: UIAlertAction!) {
         let url = NSURL(string: "https://" + action.title!)!
