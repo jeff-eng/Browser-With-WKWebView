@@ -35,6 +35,11 @@ class ViewController: UIViewController, WKNavigationDelegate {
         ac.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         presentViewController(ac, animated: true, completion: nil)
     }
+
+    func openPage(action: UIAlertAction!) {
+        let url = NSURL(string: "https://" + action.title!)!
+        webView.loadRequest(NSURLRequest(URL: url))
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
