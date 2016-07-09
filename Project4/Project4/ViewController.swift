@@ -28,6 +28,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .Plain, target: self, action: #selector(openTapped))
     }
 
+    //Method used to bring up the Action Sheet with webpage options
     func openTapped() {
         let ac = UIAlertController(title: "Open page...", message: nil, preferredStyle: .ActionSheet)
         ac.addAction(UIAlertAction(title: "Apple.com", style: .Default, handler: openPage))
@@ -35,10 +36,16 @@ class ViewController: UIViewController, WKNavigationDelegate {
         ac.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
         presentViewController(ac, animated: true, completion: nil)
     }
-
+    
+    //This method creates the NSURL string needed for the webView to be able to load the page
     func openPage(action: UIAlertAction!) {
         let url = NSURL(string: "https://" + action.title!)!
         webView.loadRequest(NSURLRequest(URL: url))
+    }
+    
+    //Adds the webpage title to the navigation bar
+    func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
+        title = webView.title
     }
     
     override func didReceiveMemoryWarning() {
